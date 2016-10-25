@@ -7,7 +7,7 @@ import java.util.Iterator;
  * access via consecutive indexes results in O(n)
  * performance for n calls of .charAt with indexes
  * in order
- * @author ola
+ * @author ola 
  *
  */
 public class CharDnaIterator implements Iterator<Character> {
