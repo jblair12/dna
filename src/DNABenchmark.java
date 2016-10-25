@@ -30,7 +30,6 @@ public class DNABenchmark {
 	private static final String ENZYME = "gaattc";
 	private static final int TRIALS = 2;
 	
-	protected static JFileChooser ourChooser = new JFileChooser(System.getProperties().getProperty("user.dir") + "/data");
 	private static String mySource;
 
 	/**
@@ -92,33 +91,24 @@ public class DNABenchmark {
 
 	public static void main(String[] args)
 			throws Exception {
-		/*
-		 * There's a fair amount of stuff here about producing the GUI to open
-		 * the file, etc. To pay attention to: 1. The variable b, which
-		 * generates the String to be spliced in. 2. The third argument to
-		 * strandSpliceBenchmark, which tells it which implementation of
-		 * IDnaStrand to test.
-		 */
-		int retval = ourChooser.showOpenDialog(null);
-		if (retval == JFileChooser.APPROVE_OPTION) {
-			File file = ourChooser.getSelectedFile();
-			mySource = dnaFromScanner(new Scanner(file));
 
-			System.out.printf("dna length = %,d\n", mySource.length());
-			System.out.println("cutting at enzyme " + ENZYME);
-			System.out.println("-----");
-			System.out.printf("Class\t%23s\t%12s\ttime\n", "splicee", "recomb");
-			System.out.println("-----");
-			for (int j = 8; j <= 32; j++) {
-				StringBuilder b = new StringBuilder("");
-				int spSize = (int) Math.pow(2, j);
-				for (int k = 0; k < spSize; k++) {
-					b.append("c");
-				}
-				String splicee = b.toString();
-				String results = strandSpliceBenchmark(ENZYME, splicee, strandType);
-				System.out.println(results);
+		File file = FileSelector.selectFile(); // ourChooser.getSelectedFile();
+		mySource = dnaFromScanner(new Scanner(file));
+
+		System.out.printf("dna length = %,d\n", mySource.length());
+		System.out.println("cutting at enzyme " + ENZYME);
+		System.out.println("-----");
+		System.out.printf("Class\t%23s\t%12s\ttime\n", "splicee", "recomb");
+		System.out.println("-----");
+		for (int j = 8; j <= 32; j++) {
+			StringBuilder b = new StringBuilder("");
+			int spSize = (int) Math.pow(2, j);
+			for (int k = 0; k < spSize; k++) {
+				b.append("c");
 			}
+			String splicee = b.toString();
+			String results = strandSpliceBenchmark(ENZYME, splicee, strandType);
+			System.out.println(results);
 		}
 		System.exit(0);
 	}

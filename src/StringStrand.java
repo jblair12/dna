@@ -125,7 +125,7 @@ public class StringStrand implements IDnaStrand {
 
 	@Override 
 	public String getStats() {
-		return String.format("# append calls = %d", myAppends);
+		return String.format("# appends = %d", myAppends);
 	}
 	
 	@Override 
