@@ -125,10 +125,6 @@ public class StringBuilderStrand implements IDnaStrand {
 		return String.format("# appends = %d", myAppends);
 	}
  
-	@Override
-	public Iterator<Character> iterator() {
-		return  new CharDnaIterator(this);
-	}
 	public char charAt(int index) {
 		return myInfo.charAt(index);
 	}

@@ -89,4 +89,12 @@ public interface IDnaStrand extends Iterable<Character>{
 	 * @throws IndexOutOfBoundsException if index < 0 or inde >= size()
 	 */
 	public char charAt(int index);
+	
+	/**
+	 * Satisfy the Iterable<Character> interface
+	 * @return an iterator over this DNA sequence
+	 */
+	default Iterator<Character> iterator(){
+		return new CharDnaIterator(this);
+	}
 }

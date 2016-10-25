@@ -132,9 +132,4 @@ public class StringStrand implements IDnaStrand {
 	public char charAt(int index){
 		return myInfo.charAt(index);
 	}
-
-	@Override
-	public Iterator<Character> iterator() {
-		return  new CharDnaIterator(this);
-	}
 }
