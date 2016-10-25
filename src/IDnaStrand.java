@@ -7,7 +7,7 @@ import java.util.Iterator;
  * @date February, 2008
  * @date October, 2011, removed cutWith and added reverse
  * @date October, 2016, removed methods that aren't used in assignment,
- * also added .charAt(int index) and .getInstance()
+ * also added .charAt(int index) and .getInstance() 
  */
 public interface IDnaStrand extends Iterable<Character>{ 
 	/**
