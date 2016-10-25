@@ -55,7 +55,7 @@ public class DNABenchmark {
 		}
 		return buf.toString();
 	}
-
+ 
 	public static String strandSpliceBenchmark(String enzyme, String splicee, String className)
 			throws Exception {
 
