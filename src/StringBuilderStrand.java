@@ -9,6 +9,7 @@ import java.util.Iterator;
  * @date January 2008, modified and commented September 2008
  * @date October 2011, made myInfo a StringBuilder rather than a String
  * @date October 2011, modified to add new methods and remove old ones
+ * @date October 2016, updated to implement new interface
  */
 
 public class StringBuilderStrand implements IDnaStrand {
@@ -20,8 +21,6 @@ public class StringBuilderStrand implements IDnaStrand {
 	 * Create a strand representing an empty DNA strand, length of zero.
 	 */
 	public StringBuilderStrand() {
-		// Syntactic trick: calls the other constructor (the one that
-		// takes a String) with an empty String.
 		this("");
 	}
 
@@ -32,10 +31,12 @@ public class StringBuilderStrand implements IDnaStrand {
 	 * @param s
 	 *            is the source of cgat data for this strand
 	 */
+
 	public StringBuilderStrand(String s) {
 		initialize(s);
 	}
 
+	@Override 
 	public IDnaStrand cutAndSplice(String enzyme, String splicee) {
 		int pos = 0;
 		int start = 0;
@@ -43,18 +44,9 @@ public class StringBuilderStrand implements IDnaStrand {
 		boolean first = true;
 		IDnaStrand ret = null;
 
-		/*
-		 * The next line is very syntax-dense. .indexOf looks for the first
-		 * index at which enzyme occurs, starting at pos. Saying pos = ...
-		 * assigns the result of that operation to the pos variable; the value
-		 * of pos is then compared against zero.
-		 * 
-		 * .indexOf returns -1 if enzyme can't be found. Therefore, this line
-		 * is:
-		 * 
-		 * "While I can find enzyme, assign the location where it occurs to pos,
-		 * and then execute the body of the loop."
-		 */
+		// code identical to StringStrand, both String and StringBuilder
+		// support .substring and .indexOf
+		
 		while ((pos = search.indexOf(enzyme, pos)) >= 0) {
 			if (first) {
 				ret = getInstance(search.substring(start, pos));
@@ -87,14 +79,16 @@ public class StringBuilderStrand implements IDnaStrand {
 	 * @param source
 	 *            is the source of this enzyme
 	 */
+	@Override 
 	public void initialize(String source) {
 		myInfo = new StringBuilder(source);
 		myAppends = 0;
 	}
 
 	/**
-	 * Returns the number of nucleotides/base-pairs in this strand.
+	 * @return number of base-pairs in this strand
 	 */
+	@Override
 	public long size() {
 		return myInfo.length();
 	}
@@ -102,10 +96,6 @@ public class StringBuilderStrand implements IDnaStrand {
 	@Override
 	public String toString() {
 		return myInfo.toString();
-	}
-
-	public String strandInfo() {
-		return this.getClass().getName();
 	}
 
 	/**
@@ -130,10 +120,11 @@ public class StringBuilderStrand implements IDnaStrand {
 		return ss;
 	}
 
+	@Override
 	public String getStats() {
 		return String.format("# append calls = %d", myAppends);
 	}
-
+ 
 	@Override
 	public Iterator<Character> iterator() {
 		return  new CharDnaIterator(this);

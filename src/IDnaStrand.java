@@ -53,8 +53,9 @@ public interface IDnaStrand extends Iterable<Character>{
 	 * internal tracked data, e.g., append calls.
 	 * @return a string representing this strand and its characteristics
 	 */
-	public String strandInfo();
-
+	default public String strandInfo() {
+		return this.getClass().getName();
+	}
 
 	/**
 	 * Append dna to the end of this strind.
@@ -81,5 +82,11 @@ public interface IDnaStrand extends Iterable<Character>{
 	 */
 	public String getStats();
 	
+	/**
+	 * Returns character at a specified index, where 0 <= index < size()
+	 * @param index specifies which character will be returned
+	 * @return the character at index
+	 * @throws IndexOutOfBoundsException if index < 0 or inde >= size()
+	 */
 	public char charAt(int index);
 }

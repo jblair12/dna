@@ -8,6 +8,7 @@ import java.util.Iterator;
  * @date January 2008, modified and commented September 2008
  * @date October 2011, made myInfo a StringBuilder rather than a String
  * @date October 2011, modified to add new methods and remove old ones
+ * @date October 2016, modified for new version of IDnaStrand
  */
 
 public class StringStrand implements IDnaStrand {
@@ -19,8 +20,6 @@ public class StringStrand implements IDnaStrand {
 	 * Create a strand representing an empty DNA strand, length of zero.
 	 */
 	public StringStrand() {
-		// Syntactic trick: calls the other constructor (the one that
-		// takes a String) with an empty String.
 		this("");
 	}
 
@@ -35,6 +34,7 @@ public class StringStrand implements IDnaStrand {
 		initialize(s);
 	}
 
+	@Override 
 	public IDnaStrand cutAndSplice(String enzyme, String splicee) {
 		int pos = 0;
 		int start = 0;
@@ -42,18 +42,6 @@ public class StringStrand implements IDnaStrand {
 		boolean first = true;
 		IDnaStrand ret = null;
 
-		/*
-		 * The next line is very syntax-dense. .indexOf looks for the first
-		 * index at which enzyme occurs, starting at pos. Saying pos = ...
-		 * assigns the result of that operation to the pos variable; the value
-		 * of pos is then compared against zero.
-		 * 
-		 * .indexOf returns -1 if enzyme can't be found. Therefore, this line
-		 * is:
-		 * 
-		 * "While I can find enzyme, assign the location where it occurs to pos,
-		 * and then execute the body of the loop."
-		 */
 		while ((pos = search.indexOf(enzyme, pos)) >= 0) {
 			if (first) {
 				ret = getInstance(search.substring(start, pos));
@@ -86,14 +74,17 @@ public class StringStrand implements IDnaStrand {
 	 * @param source
 	 *            is the source of this enzyme
 	 */
+	@Override 
 	public void initialize(String source) {
 		myInfo = new String(source);
 		myAppends = 0;
 	}
-
+	
 	/**
-	 * Returns the number of nucleotides/base-pairs in this strand.
+	 * @return the number of base pairs in this strand
 	 */
+	
+	@Override 
 	public long size() {
 		return myInfo.length();
 	}
@@ -101,10 +92,6 @@ public class StringStrand implements IDnaStrand {
 	@Override
 	public String toString() {
 		return myInfo;
-	}
-
-	public String strandInfo() {
-		return this.getClass().getName();
 	}
 
 	/**
@@ -115,12 +102,14 @@ public class StringStrand implements IDnaStrand {
 	 * @param dna
 	 *            is the String appended to this strand
 	 */
+	@Override 
 	public IDnaStrand append(String dna) {
 		myInfo = myInfo + dna;
 		myAppends++;
 		return this;
 	}
 
+	@Override 
 	public IDnaStrand reverse() {
 		StringBuilder copy = new StringBuilder(myInfo);
 		StringStrand ss = new StringStrand();
@@ -129,14 +118,17 @@ public class StringStrand implements IDnaStrand {
 		return ss;
 	}
 	
+	@Override 
 	public IDnaStrand getInstance(String source) {
 		return new StringStrand(source);
 	}
 
+	@Override 
 	public String getStats() {
 		return String.format("# append calls = %d", myAppends);
 	}
 	
+	@Override 
 	public char charAt(int index){
 		return myInfo.charAt(index);
 	}
@@ -145,24 +137,4 @@ public class StringStrand implements IDnaStrand {
 	public Iterator<Character> iterator() {
 		return  new CharDnaIterator(this);
 	}
-	/**
-	private class CharIterator implements Iterator<Character> {
-		private int myIndex;
-		public CharIterator(){
-			myIndex = 0;
-		}
-		@Override
-		public boolean hasNext() {
-			return myIndex < myInfo.length();
-		}
-
-		@Override
-		public Character next() {
-			char ch = myInfo.charAt(myIndex);
-			myIndex++;
-			return ch;
-		}
-		
-	}
-	**/
 }
