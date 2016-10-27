@@ -18,13 +18,6 @@ public class StringBuilderStrand implements IDnaStrand {
 	private int myAppends;
 
 	/**
-	 * Create a strand representing an empty DNA strand, length of zero.
-	 */
-	public StringBuilderStrand() {
-		this("");
-	}
-
-	/**
 	 * Create a strand representing s. No error checking is done to see if s
 	 * represents valid genomic/DNA data.
 	 * 
@@ -114,7 +107,7 @@ public class StringBuilderStrand implements IDnaStrand {
 
 	public IDnaStrand reverse() {
 		StringBuilder copy = new StringBuilder(myInfo);
-		StringBuilderStrand ss = new StringBuilderStrand();
+		StringBuilderStrand ss = new StringBuilderStrand("replace");
 		copy.reverse();
 		ss.myInfo = copy;
 		return ss;
