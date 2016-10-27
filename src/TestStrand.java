@@ -12,7 +12,7 @@ import java.util.Iterator;
  * @date January 2008, modified and commented in September 2008
  * @date January 2009, added splice testing
  * @date October 2015, added nodeList
- * @date October 2016, updated for new version
+ * @date October 2016, updated for iterator and no "" strings
  */
 
 public class TestStrand {
@@ -27,9 +27,9 @@ public class TestStrand {
 	 * @return an IDnaStrand object for testing in this JUnit testing class.
 	 */
 	public IDnaStrand getNewStrand(String s) {
-		return new StringStrand(s);
+		//return new StringStrand(s);
 		//return new LinkStrand(s);
-		//return new StringBuilderStrand(s);
+		return new StringBuilderStrand(s);
 	}
 
 	/**
@@ -110,10 +110,13 @@ public class TestStrand {
 	public void testSplice() {
 		String r = "gat";
 		String sp = "xxyyzz";
-		String[] strands = { "ttgatcc", "tcgatgatgattc", "tcgatctgatttccgatcc", "gat", "gatctgatctgat", "gtacc",
-				"gatgatgat" };
-		String[] recombs = { "ttxxyyzzcc", "tcxxyyzzxxyyzzxxyyzztc", "tcxxyyzzctxxyyzzttccxxyyzzcc", "xxyyzz",
-				"xxyyzzctxxyyzzctxxyyzz", "", "xxyyzzxxyyzzxxyyzz" };
+		String[] strands = { "ttgatcc", "tcgatgatgattc", 
+				             "tcgatctgatttccgatcc", "gat",
+				             "gatctgatctgat", "gtacc",
+				             "gatgatgat" };
+		String[] recombs = { "ttxxyyzzcc", "tcxxyyzzxxyyzzxxyyzztc", 
+				             "tcxxyyzzctxxyyzzttccxxyyzzcc", "xxyyzz",
+				             "xxyyzzctxxyyzzctxxyyzz", "","xxyyzzxxyyzzxxyyzz" };
 
 		for (int k = 0; k < strands.length; k++) {
 			IDnaStrand str = getNewStrand(strands[k]);

@@ -16,6 +16,9 @@ public class StringStrand implements IDnaStrand {
 	private String myInfo;
 	private int myAppends;
 
+	public StringStrand(){
+		this("");
+	}
 	/**
 	 * Create a strand representing s. No error checking is done to see if s
 	 * represents valid genomic/DNA data.

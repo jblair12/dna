@@ -17,6 +17,9 @@ public class StringBuilderStrand implements IDnaStrand {
 	private StringBuilder myInfo;
 	private int myAppends;
 
+	public StringBuilderStrand(){
+		this("");
+	}
 	/**
 	 * Create a strand representing s. No error checking is done to see if s
 	 * represents valid genomic/DNA data.
